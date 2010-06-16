@@ -1,0 +1,7 @@
+
+class BurpsComponent( GenericMakerComponent ):
+  _name = 'burps'
+
+  def dependencies( self ):
+    return [ QwtComponent ]
+

@@ -1,0 +1,6 @@
+DEFINES   = @defines@
+VERSION   = @version@
+
+INCLUDEPATH	= @includeBuild@
+
+LIBS		= @libDepsLine@
