@@ -106,20 +106,17 @@ BMain::~BMain()
 void BMain::plot( const BTable & tab, double xmin, double xmax, double inc, 
 		  const char* name )
 {
-#if QWT_VERSION >= 0x050000
+#if QWT_VERSION >= 0x060000
   QwtPlot     *gt = new QwtPlot( 0 );
-#else
-  QwtPlot	*gt = new QwtPlot( name, 0, 0 );
 
-#endif
-
-  double	x[101], y[101];
+  unsigned n = unsigned( ( xmax - xmin ) / inc );
+  QVector<double> x( n ), y( n );
   double	t;
   unsigned	i;
   unsigned	curve;
 
   gt->setAutoReplot( true );
-#if QWT_VERSION >= 0x050000
+
   QwtPlotMarker *pmark1 = new QwtPlotMarker;
   pmark1->attach( gt );
   pmark1->setLinePen( QPen( QColor( 255, 255, 255 ) ) );
@@ -127,9 +124,7 @@ void BMain::plot( const BTable & tab, double xmin, double xmax, double inc,
 
   QwtPlotCurve      *crv = new QwtPlotCurve( name );
   crv->attach( gt );
-#else
-  curve = gt->insertCurve( name );
-#endif
+
   for( i=0, t=xmin; t<=xmax; ++i, t+=inc )
     {
       x[i] = t;
@@ -138,9 +133,47 @@ void BMain::plot( const BTable & tab, double xmin, double xmax, double inc,
 
   gt->setAxisAutoScale( false );
 
-#if QWT_VERSION >= 0x050000
-  crv->setData( x, y, i );
+  QwtPointArrayData *pd = new QwtPointArrayData( x, y );
+  crv->setData( pd );
+
 #else
+
+  #if QWT_VERSION >= 0x050000
+  QwtPlot     *gt = new QwtPlot( 0 );
+  #else
+  QwtPlot       *gt = new QwtPlot( name, 0, 0 );
+
+  #endif
+
+  double        x[101], y[101];
+  double        t;
+  unsigned      i;
+  unsigned      curve;
+
+  gt->setAutoReplot( true );
+
+  #if QWT_VERSION >= 0x050000
+  QwtPlotMarker *pmark1 = new QwtPlotMarker;
+  pmark1->attach( gt );
+  pmark1->setLinePen( QPen( QColor( 255, 255, 255 ) ) );
+  pmark1->setLineStyle( QwtPlotMarker::VLine );
+
+  QwtPlotCurve      *crv = new QwtPlotCurve( name );
+  crv->attach( gt );
+  #else
+  curve = gt->insertCurve( name );
+  #endif
+  for( i=0, t=xmin; t<=xmax; ++i, t+=inc )
+    {
+      x[i] = t;
+      y[i] = tab( t );
+    }
+
+  gt->setAxisAutoScale( false );
+
+  #if QWT_VERSION >= 0x050000
+  crv->setData( x, y, i );
+  #else
   //int	xa = gt->curveXAxis( curve );
   gt->setCurveData( curve, x, y, i );
   /*gt->setAxisScale( xa, xmin, xmax, 6. );
@@ -148,6 +181,7 @@ void BMain::plot( const BTable & tab, double xmin, double xmax, double inc,
   gt->enableGridX();
   gt->setGridYAxis( gt->curveYAxis( curve ) );
   gt->enableGridY();*/
+  #endif
 #endif
   gt->replot();
   gt->show();

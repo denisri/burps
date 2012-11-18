@@ -93,9 +93,10 @@ LocWin::LocWin( Localization *loc, QWidget* parent, const char* name,
   vector<string>	parts;
   string		hit;
   QColor		collist[] 
-    = { QColor( 255, 0, 0 ), QColor( 255, 160, 0 ), QColor( 255, 255, 0 ), 
-        QColor( 92, 255, 92 ), QColor( 0, 192, 0 ),
-        QColor( 92, 92, 255 ), QColor( 0, 0, 255 ) };
+    = { QColor( 255, 120, 120 ), QColor( 255, 200, 100 ),
+        QColor( 255, 255, 100 ),
+        QColor( 120, 255, 120 ), QColor( 40, 160, 40 ),
+        QColor( 150, 150, 255 ), QColor( 80, 80, 255 ) };
   vector<QColor>	colors;
   int			col;
 
@@ -118,6 +119,7 @@ LocWin::LocWin( Localization *loc, QWidget* parent, const char* name,
   n = parts.size();
 
   int line = 0;
+  float darker = 0.85;
   for( r=34; r>=-34; --r, ++line )
   {
     double	ad = -r;
@@ -129,8 +131,8 @@ LocWin::LocWin( Localization *loc, QWidget* parent, const char* name,
     bool isgrey = ( -r & 3 ) >= 2;
     QColor c = Qt::white;
     if( isgrey )
-      c = QColor( (int) ( c.red() * 0.75 ), (int) ( c.green() * 0.75 ),
-                  (int) ( c.blue() * 0.75 ) );
+      c = QColor( (int) ( c.red() * darker ), (int) ( c.green() * darker ),
+                  (int) ( c.blue() * darker ) );
     gi->setBackground( QBrush( c ) );
 #else
     gi = new LocWinItem( ( -r & 3 ) >= 2, g,
@@ -163,8 +165,8 @@ LocWin::LocWin( Localization *loc, QWidget* parent, const char* name,
       if( col != -1 )
         c = colors[ col ];
       if( isgrey )
-        c = QColor( (int) ( c.red() * 0.75 ), (int) ( c.green() * 0.75 ),
-                    (int) ( c.blue() * 0.75 ) );
+        c = QColor( (int) ( c.red() * darker ), (int) ( c.green() * darker ),
+                    (int) ( c.blue() * darker ) );
       gi->setBackground( QBrush( c ) );
 #else
       if( col != -1 )
