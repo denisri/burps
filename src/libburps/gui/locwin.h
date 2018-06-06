@@ -30,12 +30,8 @@ class LocWin : public QWidget
   Q_OBJECT
 
 public:
-#if QT_VERSION >= 0x040000
-  typedef Qt::WindowFlags WFlags;
-#endif
-
   LocWin( burps::Localization *loc, QWidget* parent = 0, const char* name = 0, 
-          WFlags f = Qt::WDestructiveClose );
+          Qt::WindowFlags f = 0 );
   virtual ~LocWin();
 
 protected:

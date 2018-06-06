@@ -35,8 +35,7 @@ public:
   typedef Qt::WindowFlags WFlags;
 #endif
 
-  BMain( QWidget* parent = 0, const char* name = 0,
-         WFlags f = Qt::WType_TopLevel | Qt::WDestructiveClose );
+  BMain( QWidget* parent = 0, const char* name = 0, Qt::WindowFlags f = 0 );
   virtual ~BMain();
 
 public slots:
@@ -52,7 +51,7 @@ public slots:
 
 protected:
   void plot( const burps::BTable & t, double xmin, double xmax, double inc, 
-	     const char* name );
+	     const QString & name );
 
 private:
   BMain_PrivateData	*d;

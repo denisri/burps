@@ -67,27 +67,23 @@ protected:
 
 
 LocWin::LocWin( Localization *loc, QWidget* parent, const char* name, 
-		WFlags f )
-  : QWidget( parent, name, f ), _loc( loc )
+		Qt::WindowFlags f )
+  : QWidget( parent, f ), _loc( loc )
 {
+  setAttribute( Qt::WA_DeleteOnClose );
+  setObjectName( name );
+
   unsigned	i, np = loc->parts().size(), j, n;
   LogTable	ltab;
   int		r;
 
   QVBoxLayout	*l = new QVBoxLayout( this );
-#if QT_VERSION >= 0x040000
   QTableWidget   *g = new QTableWidget( this );
   // g->setSorting( -1, false );
   g->insertColumn( 0 );
   g->setRowCount( 69 );
   g->setHorizontalHeaderItem( 0, new QTableWidgetItem( tr( "Distance :" ) ) );
   QTableWidgetItem    *gi;
-#else
-  QListView	*g = new QListView( this );
-  g->setSorting( -1, false );
-  g->addColumn( tr( "Distance :" ) );
-  LocWinItem    *gi;
-#endif
   l->addWidget( g );
 
   vector<string>	parts;

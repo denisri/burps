@@ -14,17 +14,16 @@
 
 #include <burps/gui/bwin.h>
 #include <qapplication.h>
-#include <qwindowsstyle.h>
+// #include <qwindowsstyle.h>
 
 
 int main( int argc, char** argv )
 {
   QApplication::setColorSpec( QApplication::ManyColor );
-  QApplication::setStyle( new QWindowsStyle );
+//   QApplication::setStyle( new QWindowsStyle );
   QApplication	a( argc, argv );
   BMain		*bm = new BMain;
   bm->show();
-  a.setMainWidget( bm );
   return( a.exec() );
 }
 

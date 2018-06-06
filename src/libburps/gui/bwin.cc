@@ -38,10 +38,12 @@
 using namespace burps;
 
 
-BMain::BMain( QWidget* parent, const char* name, WFlags f ) 
-  : QMainWindow( parent, name, f )
+BMain::BMain( QWidget* parent, const char* name, Qt::WindowFlags f )
+  : QMainWindow( parent, f )
 {
-  setCaption( tr( "BURPS" ) );
+  setAttribute( Qt::WA_DeleteOnClose );
+  setWindowTitle( tr( "BURPS" ) );
+  setObjectName( name );
 
 #if QT_VERSION >= 0x040000
   QMenu *fi = menuBar()->addMenu( tr( "File" ) );
@@ -55,7 +57,7 @@ BMain::BMain( QWidget* parent, const char* name, WFlags f )
   tb->addAction( tr( "Shooting localization" ), this,
                  SLOT( localization() ) );
   tb->addAction( tr( "Melee localization" ) );
-  tb->insertSeparator();
+  tb->addSeparator();
   tb->addAction( tr( "Inverse Gaussian" ), this, SLOT( gaussTableInv() ) );
   tb->addAction( tr( "Inverse Sigmoid (opposition)" ), this,
                  SLOT( sigmoTableInv() ) );
@@ -107,7 +109,7 @@ BMain::~BMain()
 
 
 void BMain::plot( const BTable & tab, double xmin, double xmax, double inc, 
-		  const char* name )
+		  const QString & name )
 {
 #if QWT_VERSION >= 0x060000
   QwtPlot     *gt = new QwtPlot( 0 );
