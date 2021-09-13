@@ -14,11 +14,21 @@
 
 #include <burps/gui/bwin.h>
 #include <qapplication.h>
-// #include <qwindowsstyle.h>
+#include <iostream>
+
+using namespace std;
 
 
 int main( int argc, char** argv )
 {
+  if( argc > 1 && ( string( argv[1] ) == "-h"
+                    || string( argv[1] ) == "--help" ) )
+  {
+    cout << "burps -- computer version of roleplaying game system thought of "
+      "during the 80's...\n";
+    exit(0);
+  }
+
   QApplication::setColorSpec( QApplication::ManyColor );
 //   QApplication::setStyle( new QWindowsStyle );
   QApplication	a( argc, argv );
