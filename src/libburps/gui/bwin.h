@@ -31,11 +31,10 @@ class BMain : public QMainWindow
   Q_OBJECT
 
 public:
-#if QT_VERSION >= 0x040000
   typedef Qt::WindowFlags WFlags;
-#endif
 
-  BMain( QWidget* parent = 0, const char* name = 0, Qt::WindowFlags f = 0 );
+  BMain( QWidget* parent = 0, const char* name = 0,
+         Qt::WindowFlags f = Qt::WindowFlags() );
   virtual ~BMain();
 
 public slots:

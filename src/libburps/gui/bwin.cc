@@ -18,19 +18,14 @@
 #include <burps/math/orTable.h>
 #include <burps/math/localization.h>
 #include <burps/gui/locwin.h>
-#if QT_VERSION >= 0x040000
 #include <qmenu.h>
-#else
-#include <qpopupmenu.h>
-#endif
 #include <qmenubar.h>
+#include <QPen>
 #include <qwt_plot.h>
-#if QWT_VERSION >= 0x050000
 #include <qwt_plot_curve.h>
 #include <qwt_plot_marker.h>
 #if QWT_VERSION >= 0x060000
 #include <qwt_point_data.h>
-#endif
 #endif
 #include <qapplication.h>
 
@@ -138,7 +133,7 @@ void BMain::plot( const BTable & tab, double xmin, double xmax, double inc,
 
   gt->setAxisAutoScale( false );
 
-  QwtPointArrayData *pd = new QwtPointArrayData( x, y );
+  QwtPointArrayData<double> *pd = new QwtPointArrayData<double>( x, y );
   crv->setData( pd );
 
 #else

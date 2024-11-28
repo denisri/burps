@@ -31,7 +31,7 @@ class LocWin : public QWidget
 
 public:
   LocWin( burps::Localization *loc, QWidget* parent = 0, const char* name = 0, 
-          Qt::WindowFlags f = 0 );
+          Qt::WindowFlags f = Qt::WindowFlags() );
   virtual ~LocWin();
 
 protected:
