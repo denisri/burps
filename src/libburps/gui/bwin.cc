@@ -133,7 +133,12 @@ void BMain::plot( const BTable & tab, double xmin, double xmax, double inc,
 
   gt->setAxisAutoScale( false );
 
+#if QWT_VERSION >= 0x060200
   QwtPointArrayData<double> *pd = new QwtPointArrayData<double>( x, y );
+#else
+  QwtPointArrayData *pd = new QwtPointArrayData( x, y );
+#endif
+
   crv->setData( pd );
 
 #else
